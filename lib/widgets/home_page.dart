@@ -6,18 +6,20 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final todoListKey =
+        GlobalKey<TodoListState>(); // 定義一個 GlobalKey 來控制 TodoList
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('TODO List'),
         centerTitle: true,
-        backgroundColor: Colors.blue,
+        backgroundColor: const Color.fromARGB(255, 242, 153, 135),
       ),
-      body: const Center(
-        child: TodoList(),
+      body: Center(
+        child: TodoList(key: todoListKey),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // 確保上下文來自 MaterialApp 的後代
           showDialog(
             context: context,
             builder: (BuildContext dialogContext) {
@@ -41,7 +43,7 @@ class HomePage extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      // TODO: 實作新增待辦事項的功能
+                      todoListKey.currentState?.addTodo(newTask);
                       Navigator.pop(dialogContext);
                     },
                     child: const Text('確定'),
